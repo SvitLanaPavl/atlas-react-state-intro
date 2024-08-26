@@ -13,7 +13,7 @@ export default function SchoolCatalog() {
 
   const filteredData = courses.filter((course) => 
     course.courseNumber.toLowerCase().includes(filter.toLowerCase()) ||
-    course.courseName.toLocaleLowerCase().includes(filter.toLowerCase())
+    course.courseName.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (
