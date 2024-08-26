@@ -20,7 +20,7 @@ export default function SchoolCatalog() {
     setSort(col);
     setDirection(newDirection);
   };
-
+// Sorting the courses based on direction and col/sort state variables
   const sortedCourses = [...courses].sort((a, b) => {
     if (sort) {
       const valA = a[sort];
@@ -43,11 +43,11 @@ export default function SchoolCatalog() {
       <table>
         <thead>
           <tr>
-            <th onClick={(() => handleSort('trimester'))}>Trimester</th>
-            <th onClick={(() => handleSort('courseNumber'))}>Course Number</th>
-            <th onClick={(() => handleSort('courseName'))}>Course Name</th>
-            <th onClick={(() => handleSort('semesterCredits'))}>Semester Credits</th>
-            <th onClick={(() => handleSort('totalClockHours'))}>Total Clock Hours</th>
+            <th className={sort === 'trimester' ? 'selected' : ''} onClick={(() => handleSort('trimester'))}>Trimester</th>
+            <th className={sort === 'courseNumber' ? 'selected' : ''} onClick={(() => handleSort('courseNumber'))}>Course Number</th>
+            <th className={sort === 'courseName' ? 'selected' : ''} onClick={(() => handleSort('courseName'))}>Course Name</th>
+            <th className={sort === 'semesterCredits' ? 'selected' : ''} onClick={(() => handleSort('semesterCredits'))}>Semester Credits</th>
+            <th className={sort === 'totalClockHours' ? 'selected' : ''} onClick={(() => handleSort('totalClockHours'))}>Total Clock Hours</th>
             <th>Enroll</th>
           </tr>
         </thead>
