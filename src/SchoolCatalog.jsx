@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppCourseContext } from './App.jsx';
 
 export default function SchoolCatalog() {
   const [courses, setCourses] = useState([]);
@@ -6,6 +7,7 @@ export default function SchoolCatalog() {
   const [sort, setSort] = useState(null);
   const [direction, setDirection] = useState('asc');
   const [page, setPage] = useState(1);
+  const { enrolled, enroll } = useContext(AppCourseContext);
 
   useEffect(() => {
     fetch('/api/courses.json')
@@ -36,10 +38,14 @@ export default function SchoolCatalog() {
     course.courseNumber.toLowerCase().includes(filter.toLowerCase()) ||
     course.courseName.toLowerCase().includes(filter.toLowerCase())
   );
-
+// Pagination logic - limiting data to five rows at a page
   const currentPage = filteredData.slice((page - 1) * 5, page * 5);
   const hasMore = sortedCourses.length > page * 5;
   const hasLess = page > 1;
+
+  const isEnrolled = (courseNumber) => {
+    return enrolled.some(course => course.courseNumber === courseNumber);
+  }
 
   return (
     <div className="school-catalog">
@@ -65,7 +71,11 @@ export default function SchoolCatalog() {
               <td>{course.courseName}</td>
               <td>{course.semesterCredits}</td>
               <td>{course.totalClockHours}</td>
-              <td><button>Enroll</button></td>
+              <td>
+                {isEnrolled(course.courseNumber) ? (<button disabled>Enroll</button>)
+                : (<button onClick={() => enroll(course)}>Enroll</button>)
+                }
+                </td>
               </tr>
             ))
           ) : (
